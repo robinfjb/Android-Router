@@ -5,8 +5,8 @@ import android.net.Uri;
 import android.text.TextUtils;
 
 import robin.scaffold.lib.base.IPreProcessInterface;
+import robin.scaffold.lib.base.IRouterConfig;
 import robin.scaffold.lib.exception.RouterException;
-import robin.scaffold.lib.robin.RobinRouterConfig;
 import robin.scaffold.lib.util.CommUrl;
 import robin.scaffold.lib.util.Parameters;
 import robin.scaffold.lib.util.UrlUtils;
@@ -19,11 +19,11 @@ public class CommPreProcessor implements IPreProcessInterface<RouterAction> {
     }
 
     @Override
-    public RouterAction prePorcess(String url) throws RouterException {
+    public RouterAction prePorcess(String url, IRouterConfig routerConfig) throws RouterException {
         if(mContext == null) {
             throw new RouterException("context is null");
         }
-        if(!checkUrl(url)) {
+        if(!checkUrl(url, routerConfig)) {
             throw new RouterException("illegal url");
         }
         //url转换
@@ -66,13 +66,14 @@ public class CommPreProcessor implements IPreProcessInterface<RouterAction> {
         action.setParameters(params);
         action.setPath(commUrl.getPath());
         action.setOriginalUrl(finalLink);
+        action.routerConfig = routerConfig;
         return action;
     }
 
     /***
      * robin，并且host为robin.test，则认为有效
      */
-    private boolean checkUrl(String url) {
+    private boolean checkUrl(String url, IRouterConfig routerConfig) {
         if (TextUtils.isEmpty(url))
             return false;
 
@@ -82,7 +83,7 @@ public class CommPreProcessor implements IPreProcessInterface<RouterAction> {
         if (uri == null || scheme == null || host == null)
             return false;
 
-        return RobinRouterConfig.SCHEME.equalsIgnoreCase(scheme)
-                && RobinRouterConfig.HOST.equalsIgnoreCase(host);
+        return routerConfig.getScheme().equalsIgnoreCase(scheme)
+                && routerConfig.getHost().equalsIgnoreCase(host);
     }
 }

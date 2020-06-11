@@ -8,5 +8,5 @@ import robin.scaffold.lib.exception.RouterException;
  * @param <T>
  */
 public interface IPreProcessInterface<T> {
-    T prePorcess(String url) throws RouterException;
+    T prePorcess(String url, IRouterConfig routerConfig) throws RouterException;
 }

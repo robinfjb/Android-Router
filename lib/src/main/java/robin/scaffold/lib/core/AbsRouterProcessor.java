@@ -11,6 +11,7 @@ import java.io.Serializable;
 
 import robin.scaffold.lib.base.IProcessInterface;
 import robin.scaffold.lib.base.IResultCallback;
+import robin.scaffold.lib.base.IRouterConfig;
 import robin.scaffold.lib.core.handler.IRouterHandler;
 import robin.scaffold.lib.core.handler.RouterHandlerFactory;
 import robin.scaffold.lib.exception.RouterException;
@@ -44,9 +45,9 @@ public abstract class AbsRouterProcessor implements IProcessInterface<RouterActi
      * 用于自定义scheme跳转。在处理上，open = preprocess生成intent + 用生成intent启动activity
      */
     @Override
-    public boolean execute(Context context, String url, IRouterHandler handler, IResultCallback callback) throws RouterException{
+    public boolean execute(Context context, String url, IRouterHandler handler, IResultCallback callback, IRouterConfig routerConfig) throws RouterException{
         mContext = context;
-        RouterAction action = processUrl(url);
+        RouterAction action = processUrl(url, routerConfig);
         return processResult(action, handler, callback);
     }
 
@@ -64,9 +65,9 @@ public abstract class AbsRouterProcessor implements IProcessInterface<RouterActi
         bundle.putParcelable("p_obj",obj);
     }
 
-    protected RouterAction preprocess(String url) throws RouterException{
+    protected RouterAction preprocess(String url, IRouterConfig routerConfig) throws RouterException{
         CommPreProcessor preProcessor = new CommPreProcessor(mContext);
-        RouterAction action = preProcessor.prePorcess(url);
+        RouterAction action = preProcessor.prePorcess(url, routerConfig);
         return action;
     }
 
@@ -92,8 +93,8 @@ public abstract class AbsRouterProcessor implements IProcessInterface<RouterActi
         return false;
     }
 
-    private RouterAction processUrl(String url) throws RouterException{
-        RouterAction action = preprocess(url);
+    private RouterAction processUrl(String url, IRouterConfig routerConfig) throws RouterException{
+        RouterAction action = preprocess(url, routerConfig);
         process(action);
         return action;
     }

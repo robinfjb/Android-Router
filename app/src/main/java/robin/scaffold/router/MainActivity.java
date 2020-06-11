@@ -2,14 +2,18 @@ package robin.scaffold.router;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import robin.scaffold.lib.base.IResultCallback;
+import robin.scaffold.lib.core.RouterAction;
 import robin.scaffold.lib.core.RouterExcuter;
+import robin.scaffold.lib.core.handler.IRouterHandler;
 import robin.scaffold.lib.exception.RouterException;
-import robin.scaffold.lib.robin.RobinRouterConfig;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -20,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onClickBt1(View v) {
-        String testUrl = "crf://crfchina.com/open/native/second?param=test001";
+        String testUrl = "robin://robin.test/open/native/second?param=test001";
         try {
             new RouterExcuter().execute(MainActivity.this, testUrl, RobinRouterConfig.GROUP_HOME, null, null);
         } catch (RouterException e) {
@@ -29,9 +33,24 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onClickBt2(View v) {
-        String testUrl = "crf://crfchina.com/open/native/home?param=test002";
+        String testUrl = "robin://robin.test/open/native/home?param=test002";
         try {
             new RouterExcuter().withRequestCode(1000).execute(MainActivity.this, testUrl, RobinRouterConfig.GROUP_HOME, null, null);
+        } catch (RouterException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void onClickBt3(View v) {
+        String testUrl = "robin://robin.test/open/native/second?param=test001";
+        try {
+            new RouterExcuter().withRequestCode(1000).execute(MainActivity.this, testUrl, RobinRouterConfig.GROUP_HOME, new IRouterHandler() {
+                @Override
+                public boolean handle(Context context, RouterAction action, IResultCallback callback) throws RouterException {
+                    Log.d("MainActivity", "action内容：" + action.toString());
+                    return true;
+                }
+            }, null);
         } catch (RouterException e) {
             e.printStackTrace();
         }

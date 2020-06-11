@@ -9,6 +9,7 @@ import java.io.Serializable;
 
 import robin.scaffold.lib.base.IProcessInterface;
 import robin.scaffold.lib.base.IResultCallback;
+import robin.scaffold.lib.base.IRouterConfig;
 import robin.scaffold.lib.base.UrlRouteManager;
 import robin.scaffold.lib.core.handler.IRouterHandler;
 import robin.scaffold.lib.exception.RouterException;
@@ -36,6 +37,10 @@ public class RouterExcuter {
     }
 
     public void execute(Context context, String url, int group, @Nullable IRouterHandler handler, @Nullable IResultCallback callback) throws RouterException {
+        IRouterConfig routerConfig = UrlRouteManager.getInstance().getRouterConfig();
+        if(routerConfig == null) {
+            throw new RouterException("please call init method first");
+        }
         IProcessInterface<RouterAction> processor = UrlRouteManager.getInstance().seek(url, group);
         if(processor == null) {
             throw new RouterException("cannot find processor, have register it?");
@@ -50,7 +55,7 @@ public class RouterExcuter {
         if(mRequestCode > 0) {
             commUrl.addOrReplaceQuery(RouterConfig.EXTRA_REQUEST_CODE, String.valueOf(mRequestCode));
         }
-        boolean success = processor.execute(context, commUrl.getUrl(), handler, callback);
+        boolean success = processor.execute(context, commUrl.getUrl(), handler, callback, routerConfig);
         if(!success) {
             throw new RouterException("execute failed");
         }

@@ -17,7 +17,6 @@ import java.util.Set;
 import robin.scaffold.lib.base.IResultCallback;
 import robin.scaffold.lib.core.RouterAction;
 import robin.scaffold.lib.exception.RouterException;
-import robin.scaffold.lib.robin.RobinRouterConfig;
 import robin.scaffold.lib.util.Parameters;
 
 
@@ -60,7 +59,7 @@ public class ActivityHandler implements IRouterHandler {
         String packageName = action.getPackageName();
         if(TextUtils.isEmpty(packageName))
             packageName = intent.getPackage();
-        if (!RobinRouterConfig.MY_PACKAGE_NAME.equals(packageName) || !(context instanceof Activity)) {
+        if (!action.routerConfig.getPackageName().equals(packageName) || !(context instanceof Activity)) {
             //外部应用跳转进入，增加FLAG_ACTIVITY_NEW_TASK，使得能够返回首页
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         }

@@ -17,7 +17,7 @@ import robin.scaffold.lib.exception.RouterException;
  */
 
 public interface IProcessInterface<T> {
-    boolean execute(Context context, String url, @Nullable IRouterHandler handler, IResultCallback callback) throws RouterException;
+    boolean execute(Context context, String url, @Nullable IRouterHandler handler, IResultCallback callback, IRouterConfig routerConfig) throws RouterException;
     /**
      * 支持Serializable对象传递
      * @param obj

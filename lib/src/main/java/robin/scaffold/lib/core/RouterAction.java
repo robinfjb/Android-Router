@@ -2,6 +2,7 @@ package robin.scaffold.lib.core;
 
 import android.os.Bundle;
 
+import robin.scaffold.lib.base.IRouterConfig;
 import robin.scaffold.lib.util.Parameters;
 
 
@@ -19,6 +20,24 @@ public class RouterAction<T> {
     private String path;
     private Parameters parameters;
     private int intentFlag;
+
+    public IRouterConfig routerConfig;
+
+    @Override
+    public String toString() {
+        return "RouterAction{" +
+                "requestCode=" + requestCode +
+                ", packageName='" + packageName + '\'' +
+                ", originalUrl='" + originalUrl + '\'' +
+                ", targetType=" + targetType +
+                ", bundle=" + bundle +
+                ", target=" + target +
+                ", path='" + path + '\'' +
+                ", parameters=" + parameters +
+                ", intentFlag=" + intentFlag +
+                ", routerConfig=" + routerConfig +
+                '}';
+    }
 
     public String getOriginalUrl() {
         return originalUrl;

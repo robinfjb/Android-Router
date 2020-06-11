@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-import robin.scaffold.lib.robin.RobinRouterConfig;
+import robin.scaffold.lib.exception.RouterException;
 import robin.scaffold.lib.util.MathUtils;
 
 
@@ -15,11 +15,19 @@ import robin.scaffold.lib.util.MathUtils;
  */
 
 class UrlRouterCore {
+    private IRouterConfig routerConfig;
     private SparseArray<Map<String, IProcessInterface>> processorList = new SparseArray<Map<String, IProcessInterface>>();
 
-    public void registerProtocol(String regx, int group, IProcessInterface processor){
+    public UrlRouterCore(IRouterConfig routerConfig) {
+        this.routerConfig = routerConfig;
+    }
+
+    public void registerProtocol(String regx, int group, IProcessInterface processor) throws RouterException{
         if(group == 0) {
-            group = RobinRouterConfig.GROUP_DEFAULT;
+            if(routerConfig == null) {
+                throw new RouterException("please call init method first");
+            }
+            group = routerConfig.defaultGroup();
         }
         Map<String, IProcessInterface> map = processorList.get(group);
         if(map == null)

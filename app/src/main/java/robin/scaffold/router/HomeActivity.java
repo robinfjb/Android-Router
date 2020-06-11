@@ -15,13 +15,12 @@ import java.util.List;
 import robin.scaffold.lib.base.IResultCallback;
 import robin.scaffold.lib.core.RouterExcuter;
 import robin.scaffold.lib.exception.RouterException;
-import robin.scaffold.lib.robin.RobinRouterConfig;
 
 public class HomeActivity extends AppCompatActivity {
     FragmentManager mFragmentManager;
-    final String s1 = "crf://crfchina.com/open/native/home/tab1?param=test1";
-    final String s2 = "crf://crfchina.com/open/native/home/tab2?param=test2";
-    final String s3 = "crf://crfchina.com/open/native/second";
+    final String s1 = "robin://robin.test/open/native/home/tab1?param=test1";
+    final String s2 = "robin://robin.test/open/native/home/tab2?param=test2";
+    final String s3 = "robin://robin.test/open/native/home/tab3?param=test3";
     private List<Fragment> mFragmentMap = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +31,7 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void initFragment() {
-        Sdata data = new Sdata();
+        TestData data = new TestData();
         try {
             new RouterExcuter()
                     .withSerializableObj(data)
@@ -197,11 +196,5 @@ public class HomeActivity extends AppCompatActivity {
         } catch (RouterException e) {
             e.printStackTrace();
         }
-    }
-
-    class Sdata implements Serializable {
-        String s1 = "嘉实多";
-        int i1 = 10000;
-        String s2 = "打电话叫";
     }
 }
