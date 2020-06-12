@@ -1,6 +1,6 @@
 # Android-Router
 Android Router Project 路由框架
-框架的介绍可以参考这里： [https://juejin.im/post/5ee2fd1be51d450d800a40a0]Android路由框架
+框架的介绍可以参考这里：  [Android路由框架](https://juejin.im/post/5ee2fd1be51d450d800a40a0)
 
 ### 第一步，定义
 定义自己的Config类
