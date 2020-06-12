@@ -105,7 +105,7 @@ public class HomeRouteProcessor extends AbsRouterProcessor {
 ```
 
 ### 第四步 使用
-1. 带参数Activity 跳转：
+#### 1. 带参数Activity 跳转：
 ```
  String testUrl = "robin://robin.test/open/native/second?param=test001";
         try {
@@ -116,7 +116,7 @@ public class HomeRouteProcessor extends AbsRouterProcessor {
 ```
 目标Activity接收：intent.getStringExtra("param")即可获取参数值
 
-2. 带requestCode跳转：
+##### 2. 带requestCode跳转：
 加上withRequestCode方法即可
 ```
  String testUrl = "robin://robin.test/open/native/home";
@@ -127,7 +127,7 @@ public class HomeRouteProcessor extends AbsRouterProcessor {
         }
 ```
 
-3. fragment跳转：
+#### 3. fragment跳转：
 需要自定义callback，获取到目标fragment后自行处理
 ```
 try {
@@ -149,7 +149,7 @@ try {
         }
 ```
 
-4. 自定义处理：
+#### 4. 自定义处理：
 不由框架做跳转或者返回fragment
 比如要打开一个外部http url链接,可以自定义一个IRouterHandler处理器
 ```
