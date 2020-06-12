@@ -4,7 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -42,12 +44,20 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onClickBt3(View v) {
-        String testUrl = "robin://robin.test/open/native/second?param=test001";
+        String testUrl = "robin://robin.test/open/web?url=https://m.baidu.com";
         try {
             new RouterExcuter().withRequestCode(1000).execute(MainActivity.this, testUrl, RobinRouterConfig.GROUP_HOME, new IRouterHandler() {
                 @Override
                 public boolean handle(Context context, RouterAction action, IResultCallback callback) throws RouterException {
                     Log.d("MainActivity", "action内容：" + action.toString());
+                    if("/open/web".equals(action.getPath())) {
+                        String url = action.getParameters().getParameter("url");
+                        if(!TextUtils.isEmpty(url)) {
+                            Intent intent = new Intent(Intent.ACTION_VIEW);
+                            intent.setData(Uri.parse(url));
+                            context.startActivity(intent);
+                        }
+                    }
                     return true;
                 }
             }, null);

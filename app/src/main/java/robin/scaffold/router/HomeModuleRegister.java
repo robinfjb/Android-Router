@@ -11,6 +11,7 @@ public class HomeModuleRegister extends ProcessorRegister {
     private String regex3 = RobinRouterConfig.SCHEME + "://" + RobinRouterConfig.HOST + "/open/native/home/tab3";
     private String regex4 = RobinRouterConfig.SCHEME + "://" + RobinRouterConfig.HOST + "/open/native/home";
     private String regex5 = RobinRouterConfig.SCHEME + "://" + RobinRouterConfig.HOST + "/open/native/second";
+    private String regex6 = RobinRouterConfig.SCHEME + "://" + RobinRouterConfig.HOST + "/open/web";
     private int group = RobinRouterConfig.GROUP_HOME;
     @Override
     public void register() {
@@ -22,6 +23,7 @@ public class HomeModuleRegister extends ProcessorRegister {
             UrlRouteManager.getInstance().registerProtocol(regex3, group, processor);
             UrlRouteManager.getInstance().registerProtocol(regex4, group, processor);
             UrlRouteManager.getInstance().registerProtocol(regex5, group, processor);
+            UrlRouteManager.getInstance().registerProtocol(regex6, group, processor);
         } catch (RouterException e) {
             e.printStackTrace();
         }
